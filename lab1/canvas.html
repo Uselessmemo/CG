@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Angry bird</title>
+        <meta charset="utf-8"/>
+        <script src="fabric.min.js"></script>
+        <style>
+            .hidden{
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+            <canvas id="example" width="1000" height="450">
+                Обновите браузер
+            </canvas>
+
+        <img src="img/sun.png" style="height: 100px; width: 100px;" id="sun" class="hidden">
+        <img src="img/moon.png" style="height: 100px; width: 100px;" id="moon" class="hidden">
+
+        <script>
+            var example = new fabric.Canvas('example').getContext('2d');
+
+            var sun = {
+                image: document.getElementById('sun'),
+                x: 0,
+                y: 0,
+                angle: 180
+            }
+
+            var moon = {
+                image: document.getElementById('moon'),
+                x: 0,
+                y: 0,
+                angle: 0
+            } 
+
+            requestAnimationFrame(calculate)
+
+            function calculate(){
+                update(sun)
+                update(moon)
+                if (sun.angle > 180) {
+                    //day
+                    example.fillStyle = 'rgb(60, 131, 226)'
+                }
+                else {
+                    //night
+                    example.fillStyle = 'rgb(0, 35, 62)'
+                }
+                example.fillRect(0, 0, 1000, 450)
+                example.drawImage(moon.image, moon.x, moon.y, 100, 100)
+                example.drawImage(sun.image, sun.x, sun.y, 100, 100)
+                requestAnimationFrame(calculate)
+            }
+
+            function update(object){
+                object.angle = (object.angle + 1) % 360
+                object.x = 450 + 400 * Math.cos(object.angle * Math.PI / 180)
+                object.y = 450 + 400 * Math.sin(object.angle * Math.PI / 180)
+            }
+
+        </script>
+    </body>
+</html>
+
+

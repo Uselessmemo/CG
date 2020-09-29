@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="fabric.min.js"></script>
+    <canvas height='500' width='500' id='example'>Обновите браузер</canvas>
+        <script>
+            var canvas = new fabric.Canvas('example');
+
+            var circle = new fabric.Circle({
+                radius: 250
+            });
+            
+            circle.setGradient('fill', {
+                x1: 0,
+                y1: 0,
+                x2: 0,
+                y2: circle.height,
+                colorStops:{
+                    0: '#d97b7a',
+                    1: '#7189bf'
+                }
+            });
+            canvas.add(circle)
+
+            for (j = 0; j < 4; j++){
+                var rect = new fabric.Rect({
+                    height: 50,
+                    width: 300 - 50*j,
+                    left: 250,
+                    top: 350,
+                    fill: '#edd5cd'
+                });
+                rect.left -= rect.width/2;
+                rect.top -= rect.height*j;
+                canvas.add(rect);
+            }
+
+            var trian = new fabric.Triangle({
+                left: 175,
+                top: 160,
+                width: 150,
+                height: 40,
+                fill: '#d97b7a'
+            })
+
+            canvas.add(trian)
+
+            var sun = new fabric.Ellipse({
+                rx: 60,
+                ry: 40,
+                opacity: 0.7,
+                left: 90,
+                top: 40,
+                fill: 'orange'
+            })
+
+            sun.setShadow({
+                color: 'red',
+                blur: 10,
+                offsetX: 10,
+                offsetY: 10
+            });
+
+            function first_half(){
+                sun.set({
+                    left: 90,
+                    top: 40
+                })
+                sun.animate('left', '190', {
+                    duration: 2000,
+                    onChange: canvas.renderAll.bind(canvas),
+                    onComplete: function second_half(){
+
+                        sun.animate('left', '300', {
+                            duration: 2000,
+                            onChange: canvas.renderAll.bind(canvas),
+                            onComplete: first_half
+                        })
+                    }
+                })
+            }
+            canvas.add(sun)
+            canvas.renderAll();
+            first_half()
+        </script>
+</body>
+</html>

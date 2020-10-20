@@ -1,0 +1,18 @@
+.buttons{
+    display: flex;
+    flex-direction: row;
+    width: 800px;
+    justify-content: space-around;
+}
+
+.label{
+    font-size: 14pt;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 700;
+}
+
+button{
+    height: 30px;
+    width: 30px;
+    font-size: 14pt; 
+}
